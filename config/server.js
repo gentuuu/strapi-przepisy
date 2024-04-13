@@ -42,7 +42,7 @@ module.exports = ({ env }) => ({
         return [
           // ...
           createProxyMiddleware('/graphql', {
-            target: 'http://localhost:1337/graphql',
+            target: 'https://test-apii2-aa1ebc7c3670.herokuapp.com/graphql',
             changeOrigin: true,
             pathRewrite: { '^/graphql': '' },
             onProxyRes(proxyRes) {
