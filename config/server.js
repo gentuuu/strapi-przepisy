@@ -9,49 +9,19 @@
 //   },
 // });
 
-
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const cors = require('cors');
 
 module.exports = ({ env }) => ({
   // ...
   server: {
-    // ...
     middlewares: [
       // ...
-      'strapi::errors',
-      'strapi::security',
-      (config, { strapi }) => {
-        const cors = require('cors')({
-          origin: [
-            'http://localhost:5173/', // Dodaj adres URL twojej aplikacji React
-            // 'https://twoja-domena.com', // Dodaj adres URL twojej aplikacji React, jeśli jest wdrożona
-          ],
-          methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
-          allowedHeaders: [
-            'Content-Type',
-            'Authorization',
-            'X-Requested-With',
-            'Accept',
-            'Origin',
-            'Cache-Control',
-            'X-Content-Type-Options',
-          ],
-          credentials: true,
-        });
-
-        return [
-          // ...
-          createProxyMiddleware('/graphql', {
-            target: 'https://test-apii2-aa1ebc7c3670.herokuapp.com/graphql',
-            changeOrigin: true,
-            pathRewrite: { '^/graphql': '' },
-            onProxyRes(proxyRes) {
-              proxyRes.headers['Access-Control-Allow-Origin'] = '*';
-            },
-          }),
-          cors,
-        ];
-      },
+      cors({
+        origin: ['http://localhost:5173/', 'https://test-apii2-aa1ebc7c3670.herokuapp.com/' , 'https://test-apii2-aa1ebc7c3670.herokuapp.com/graphql'], // Dodaj adresy URL, z których chcesz zezwolić na dostęp do zasobów
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        credentials: true,
+      }),
       // ...
     ],
   },
