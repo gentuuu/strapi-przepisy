@@ -1,0 +1,74 @@
+{
+  "kind": "collectionType",
+  "collectionName": "przepisy",
+  "info": {
+    "singularName": "przepis",
+    "pluralName": "przepisy",
+    "displayName": "Przepisy",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "richtext"
+    },
+    "Text": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBalloon"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "slug": {
+      "type": "customField",
+      "options": {
+        "pattern": "title"
+      },
+      "customField": "plugin::slug.slug"
+    },
+    "Level": {
+      "type": "enumeration",
+      "enum": [
+        "Łatwy",
+        "Średni",
+        "Trudny"
+      ]
+    },
+    "Time": {
+      "type": "string"
+    },
+    "Person": {
+      "type": "string"
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Ingredients": {
+      "type": "customField",
+      "options": {
+        "preset": "toolbarBalloon"
+      },
+      "customField": "plugin::ckeditor5.CKEditor"
+    },
+    "kategoria": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::kategoria.kategoria",
+      "mappedBy": "przepisy"
+    }
+  }
+}

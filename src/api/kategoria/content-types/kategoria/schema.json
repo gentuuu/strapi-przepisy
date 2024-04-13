@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "kategorie",
+  "info": {
+    "singularName": "kategoria",
+    "pluralName": "kategorie",
+    "displayName": "Kategorie",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "przepisy": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::przepis.przepis",
+      "inversedBy": "kategoria"
+    },
+    "slug": {
+      "type": "customField",
+      "customField": "plugin::slug.slug",
+      "options": {
+        "pattern": "title"
+      }
+    },
+    "text": {
+      "type": "richtext"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}
