@@ -22,6 +22,6 @@ module.exports = ({ env }) => ({
   },
   cors: {
     enabled: true,
-    origin: ['http://localhost:5173/', 'https://your-frontend-domain.com'], // replace with your frontend's origin
+    origin: ['http://localhost:5173/'], // replace with your frontend's origin
   },
 });
