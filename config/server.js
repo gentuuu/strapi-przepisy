@@ -9,23 +9,51 @@
 //   },
 // });
 
-const cors = require('cors');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = ({ env }) => ({
 
   server: {
+ 
     middlewares: [
 
-      cors({
-        origin: ['http://localhost:3000', 'https://twoj-adres-url.herokuapp.com'], // Dodaj adresy URL, z których chcesz zezwolić na dostęp do zasobów
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        credentials: true,
-      }),
+      'strapi::errors',
+      'strapi::security',
+      (config, { strapi }) => {
+        const cors = require('cors')({
+          origin: [
+            'http://localhost:3000', // Dodaj adres URL twojej aplikacji React
+            // 'https://twoja-domena.com', // Dodaj adres URL twojej aplikacji React, jeśli jest wdrożona
+          ],
+          methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
+          allowedHeaders: [
+            'Content-Type',
+            'Authorization',
+            'X-Requested-With',
+            'Accept',
+            'Origin',
+            'Cache-Control',
+            'X-Content-Type-Options',
+          ],
+          credentials: true,
+        });
 
+        return [
+
+          createProxyMiddleware('/graphql', {
+            target: 'http://localhost:1337/graphql',
+            changeOrigin: true,
+            pathRewrite: { '^/graphql': '' },
+            onProxyRes(proxyRes) {
+              proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+            },
+          }),
+          cors,
+        ];
+      },
+   
     ],
   },
 
 });
-
 
