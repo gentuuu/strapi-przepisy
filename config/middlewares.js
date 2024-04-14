@@ -1,30 +1,23 @@
-// module.exports = [
-//   'strapi::logger',
-//   'strapi::errors',
-//   'strapi::security',
-//   'strapi::cors',
-//   'strapi::poweredBy',
-//   'strapi::query',
-//   'strapi::body',
-//   'strapi::session',
-//   'strapi::favicon',
-//   'strapi::public',
-// ];
-
-
-module.exports = {
-  load: {
-    before: ['timer', 'responseTime', 'logger', 'cors', 'responses', 'gzip'],
-    order: [],
-    after: ['parser', 'router'],
-  },
-  settings: {
-    timer: {
-      enabled: true,
-    },
-    cors: {
+module.exports = [
+  'strapi::logger',
+  'strapi::errors',
+  'strapi::security',
+  {
+    name: 'strapi::cors',
+    config: {
       enabled: true,
       origin: ['http://localhost:5173/', 'http://gentuuu4.online/'],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+      headers: ['Content-Type', 'Authorization'],
+      exposedHeaders: [],
+      credentials: true,
+      maxAge: 3600,
     },
   },
-};
+  'strapi::poweredBy',
+  'strapi::query',
+  'strapi::body',
+  'strapi::session',
+  'strapi::favicon',
+  'strapi::public',
+];
