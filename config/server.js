@@ -17,7 +17,7 @@ module.exports = ({ env }) => ({
   },
   cors: {
     enabled: true,
-    origin: ['http://localhost:5173/', 'http://gentuuu4.online/'], // replace with your frontend's origin
+    origin: ['http://gentuuu4.online/'], // replace with your frontend's origin
   },
 });
 
